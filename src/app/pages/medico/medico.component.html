@@ -1,0 +1,229 @@
+<div class="card table-card">
+    <div class="card-header">
+        <h5>Lista de medico de [Aplicativo] # {{ medicos.length }}</h5>
+        <div class="card-header-right">
+            <div class="btn-group card-option">
+                <button type="button" (click)="abrirModal()" class="btn  btn-primary btn-sm">
+                    Agregar medico
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <!-- <th>FOTO</th> -->
+                        <th>Nombres</th>
+                        <!-- <th>Apeliido Paterno</th> -->
+                        <!-- <th>Apeliido Materno</th> -->
+                        <th>Correo Electronico</th>
+                        <th>Departamente</th>
+                        <!-- <th>Tipo Documento</th> -->
+                        <th>Nro. Documento</th>
+                        <th>Celular</th>
+                        <!-- <th>Sexo</-th> -->
+                        <!-- <th></th> -->
+                        <th>enActividad</th>
+                        <th>profesion</th>
+                        <th>area</th>
+                        <th>cargo</th>
+                        <!-- <th>procedencia</th> -->
+                        <th class="text-right">Hospital</th>
+                        <th class="text-right">Accion</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let medico of medicos">
+                        <td>
+                            <div class="d-inline-block align-middle">
+                                <img src="../../../assets/images/user/avatar-4.jpg" alt="user image" class="img-radius wid-40 align-top m-r-15">
+                                <div class="d-inline-block">
+                                    <h6>{{medico.nombres}}</h6>
+                                    <p class="text-muted m-b-0">{{medico.paterno +','+ medico.materno}}</p>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>{{medico.email}}</td>
+                        <td>{{medico.departamento}}</td>
+                        <!-- <td>{{medico.id_tipdoc}}</td> -->
+                        <td>{{medico.nro_doc}}</td>
+                        <td>{{medico.celular}}</td>
+                        <!-- <td><label class="badge badge-light-primary">{{medico.sexo}}</label></td> -->
+                        <!-- <td>{{medico.}}</td> -->
+                        <td><label class="badge badge-light-success">{{ medico.enActividad}}</label></td>
+                        <td>{{medico.profesion}}</td>
+                        <td><label class="badge badge-light-warning">{{medico.area}}</label></td>
+                        <td>{{medico.cargo}}</td>
+                        <!-- <td>{{medico.procedencia}}</td> -->
+                        <td>medico.hospital</td>
+                        <td class="text-right">
+                            <a href="#" (click)="borrar(medico)" class="badge badge-danger">Eliminar</a>
+                            <a href="#" (click)="abrirModal(medico)" class="badge badge-primary">Editar</a>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="fondo-modal-imagen" [class.oculto]="ocultarModal">
+    <div class="modal-dialog modal-lg " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Registrar Medico</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="cerrarModal()"><span aria-hidden="true">x</span></button>
+            </div>
+            <div class="modal-body">
+
+                <form autocomplete="off" [formGroup]="medicoForm" (ngSubmit)="saveMedico()">
+                    <div class="form-row">
+                        <div class="form-group col-md-4 fill">
+                            <label for="exampleInputEmail1">Nombres</label>
+                            <input formControlName="nombres" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nombre Completo">
+                        </div>
+                        <div class="form-group col-md-4 fill">
+                            <label for="exampleInputEmail1">Apellido Paterno</label>
+                            <input formControlName="paterno" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese Correo E.">
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        </div>
+                        <div class="form-group col-md-4 fill">
+                            <label for="exampleInputEmail1">Apellido Materno</label>
+                            <input formControlName="materno" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese Destino">
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-4 fill">
+                            <label for="exampleInputEmail1">Fecha de Nacimiento</label>
+                            <input formControlName="fec_nac" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Fecha">
+                        </div>
+                        <div class="form-group col-md-4 fill">
+                            <label for="exampleFormControlSelect1">tipoColegiatura</label>
+                            <select formControlName="tipoColegiatura" class="form-control" id="exampleFormControlSelect1">
+                                    <option selected="" class="test">MEDICOS</option>
+                                    <option>ESPECIALIZADOS</option>
+                                    <option>TECNICOS</option>
+                                </select>
+                        </div>
+                        <div class="form-group col-md-4 fill">
+                            <label for="exampleInputEmail1">nroColegiatura</label>
+                            <input formControlName="nroColegiatura" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Fecha">
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4 fill">
+                            <label for="exampleInputEmail1">Correo Electronico</label>
+                            <input formControlName="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nombre Completo">
+                        </div>
+                        <div class="form-group col-md-4 fill">
+                            <label>Sexo</label><br>
+                            <label class="radio-inline">
+                                <input formControlName="sexo" type="radio" value="Masculino" checked="checked">Masculino</label>
+                            <label class="radio-inline">
+                                    <input formControlName="sexo" type="radio"  value="Femenino">Femenino</label>
+                        </div>
+                        <div class="form-group col-md-4 fill">
+                            <label>Estado</label><br>
+                            <label class="radio-inline">
+                                <input formControlName="enActividad" type="radio" value="inactivo" >Inactivo</label>
+                            <label class="radio-inline">
+                                    <input formControlName="enActividad" type="radio"  value="activo" checked="checked">Activo</label>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6 fill">
+                            <label for="exampleInputEmail1">Modo de Contrato</label>
+                            <input formControlName="modContrato" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Fecha">
+                        </div>
+
+                        <div class="form-group col-md-6 fill">
+                            <label for="exampleInputPassword1">Celular</label>
+                            <input formControlName="celular" class="form-control" id="exampleInputPassword1" placeholder="Ingrese Celular">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4 fill">
+                            <label for="exampleInputEmail1">R.N.E</label>
+                            <input formControlName="rne" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Fecha">
+                        </div>
+                        <div class="form-group col-md-4 fill">
+                            <label for="exampleFormControlSelect1">Tipo Documento</label>
+                            <select formControlName="id_tipdoc" class="form-control" id="exampleFormControlSelect1">
+                                <option selected="" class="test">DNI</option>
+                                <option>Cat Extranjeria</option>
+                                <option>Pasaporte</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4 fill">
+                            <label for="exampleInputEmail1">Num. Documento</label>
+                            <input formControlName="nro_doc" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Fecha">
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-3 fill">
+                            <label for="exampleInputEmail1">Direccion</label>
+                            <input formControlName="direccion" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese Direccion">
+                        </div>
+                        <div class="form-group col-md-3 fill">
+                            <label for="exampleInputPassword1">departamento</label>
+                            <input formControlName="departamento" class="form-control" id="exampleInputPassword1" placeholder="Ingrese Celular">
+                        </div>
+                        <div class="form-group col-md-3 fill">
+                            <label for="exampleInputPassword1">provincia</label>
+                            <input formControlName="provincia" class="form-control" id="exampleInputPassword1" placeholder="Ingrese Celular">
+                        </div>
+                        <div class="form-group col-md-3 fill">
+                            <label for="exampleInputPassword1">distrito</label>
+                            <input formControlName="distrito" class="form-control" id="exampleInputPassword1" placeholder="Ingrese Celular">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4 fill">
+                            <label for="exampleFormControlSelect1">cargo</label>
+                            <select formControlName="cargo" class="form-control" id="exampleFormControlSelect1">
+                                <option selected="" class="test">DNI</option>
+                                <option>Cat Extranjeria</option>
+                                <option>Pasaporte</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4 fill">
+                            <label for="exampleFormControlSelect1">Area</label>
+                            <select formControlName="area" class="form-control" id="exampleFormControlSelect1">
+                                <option selected="" class="test">DNI</option>
+                                <option>Cat Extranjeria</option>
+                                <option>Pasaporte</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-4 fill">
+                            <label for="exampleInputEmail1">Ruc</label>
+                            <input formControlName="ruc" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Fecha">
+                        </div>
+                    </div>
+                    <div class="form-row">
+
+                        <div class="form-group col-md-6 col-md-12">
+                            <button type="submit" class="btn  btn-primary">{{ acccion }}</button>
+                            <button type="button" (click)="cerrarModal()" class="btn  btn-danger">Cancelar</button>
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+            <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-secondary has-ripple" data-dismiss="modal">Close<span class="ripple ripple-animate" style="height: 75.5729px; width: 75.5729px; animation-duration: 0.7s; animation-timing-function: linear; background: rgb(255, 255, 255); opacity: 0.4; top: -10.5382px; left: 3.62149px;"></span></button>
+            <button type="button" class="btn  btn-primary">Send message</button>
+        </div> -->
+        </div>
+    </div>
+</div>

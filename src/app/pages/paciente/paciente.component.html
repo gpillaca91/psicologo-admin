@@ -1,0 +1,170 @@
+<div class="card table-card">
+    <div class="card-header">
+        <h5>Lista de paciente de [Aplicativo] # {{ pacientes.length }}</h5>
+        <div class="card-header-right">
+            <div class="btn-group card-option">
+                <button type="button" (click)="abrirModal()" class="btn  btn-primary btn-sm">
+                    Agregar paciente
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <!-- <th>FOTO</th> -->
+                        <th>Nombres</th>
+                        <!-- <th>Apeliido Paterno</th> -->
+                        <!-- <th>Apeliido Materno</th> -->
+                        <th>Correo Electronico</th>
+                        <th>Direccion</th>
+                        <th>Tipo Documento</th>
+                        <th>Nro. Documento</th>
+                        <!-- <th>Fec. Nacimiento</th> -->
+                        <th>Celular</th>
+                        <th>Sexo</th>
+                        <th>Nro Clinico</th>
+                        <th>Tipo Cliente</th>
+                        <th class="text-right">Hospital</th>
+                        <th class="text-right">Accion</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let paciente of pacientes">
+                        <td>
+                            <div class="d-inline-block align-middle">
+                                <img src="../../../assets/images/user/avatar-4.jpg" alt="user image" class="img-radius wid-40 align-top m-r-15">
+                                <div class="d-inline-block">
+                                    <h6>{{paciente.nombres}}</h6>
+                                    <p class="text-muted m-b-0">{{paciente.paterno +','+ paciente.materno}}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <!-- <td>{{paciente.nombre}}</td> -->
+                        <!-- <td>{{paciente.paterno}}</td> -->
+                        <!-- <td>{{paciente.materno}}</td> -->
+                        <td>{{paciente.email}}</td>
+                        <td>{{paciente.direccion}}</td>
+                        <td>{{paciente.id_tipdoc}}</td>
+                        <td>{{paciente.nro_doc}}</td>
+                        <!-- <td>{{paciente.fec_nac}}</td> -->
+                        <td>{{paciente.celular}}</td>
+                        <td><label class="badge badge-light-success">{{paciente.sexo}}</label></td>
+                        <td>{{paciente.nro_historia}}</td>
+                        <td>{{paciente.tipocliente}}</td>
+                        <td>paciente.hospital</td>
+                        <td class="text-right">
+                            <a href="#" (click)="borrar(paciente)" class="badge badge-danger">Eliminar</a>
+                            <a href="#" (click)="abrirModal(paciente)" class="badge badge-primary">Editar</a>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- Modal crear paciente -->
+<div class="fondo-modal-imagen" [class.oculto]="ocultarModal">
+    <div class="modal-dialog modal-lg " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Registrar Medico</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="cerrarModal()"><span aria-hidden="true">x</span></button>
+            </div>
+            <div class="modal-body">
+
+                <form autocomplete="off" [formGroup]="pacienteForm" (ngSubmit)="savePaciente()">
+                    <div class="form-row">
+                        <div class="form-group col-md-6 fill">
+                            <label for="exampleInputEmail1">Nombres</label>
+                            <input formControlName="nombres" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nombre Completo">
+                        </div>
+                        <div class="form-group col-md-6 fill">
+                            <label for="exampleInputEmail1">Apellido Paterno</label>
+                            <input formControlName="paterno" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese Correo E.">
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6 fill">
+                            <label for="exampleInputEmail1">Apellido Materno</label>
+                            <input formControlName="materno" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese Destino">
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        </div>
+                        <div class="form-group col-md-6 fill">
+                            <label for="exampleInputEmail1">Fecha de Nacimiento</label>
+                            <input formControlName="fec_nac" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Fecha">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6 fill">
+                            <label for="exampleFormControlSelect1">Tipo de Cliente</label>
+                            <select formControlName="tipocliente" class="form-control" id="exampleFormControlSelect1">
+                                    <option selected="" class="test">A</option>
+                                    <option>B</option>
+                                </select>
+                        </div>
+                        <div class="form-group col-md-6 fill">
+                            <label>Sexo</label><br>
+                            <label class="radio-inline">
+                                <input formControlName="sexo" type="radio" value="Masculino" checked="checked">Masculino</label>
+                            <label class="radio-inline">
+                                    <input formControlName="sexo" type="radio"  value="Femenino">Femenino</label>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6 fill">
+                            <label for="exampleInputEmail1">Nro de Historia Clinica</label>
+                            <input formControlName="nro_historia" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Fecha">
+                        </div>
+                        <div class="form-group col-md-6 fill">
+                            <label for="exampleInputEmail1">Correo Electronico</label>
+                            <input formControlName="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nombre Completo">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6 fill">
+                            <label for="exampleInputEmail1">Direccion</label>
+                            <input formControlName="direccion" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese Direccion">
+                        </div>
+                        <div class="form-group col-md-6 fill">
+                            <label for="exampleInputPassword1">Celular</label>
+                            <input formControlName="celular" class="form-control" id="exampleInputPassword1" placeholder="Ingrese Celular">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6 fill">
+                            <label for="exampleFormControlSelect1">Tipo de Documento</label>
+                            <select formControlName="id_tipdoc" class="form-control" id="exampleFormControlSelect1">
+                                <option selected="" class="test">DNI</option>
+                                <option>Carnet Extranjeria</option>
+                                <option>Pasaporte</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6 fill">
+                            <label for="exampleInputEmail1">Num. Documento</label>
+                            <input formControlName="nro_doc" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Fecha">
+                        </div>
+                    </div>
+                    <div class="form-row">
+
+                        <div class="form-group col-md-6 col-md-12">
+                            <button type="submit" class="btn  btn-primary">{{ acccion }}</button>
+                            <button type="button" (click)="cerrarModal()" class="btn  btn-danger">Cancelar</button>
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+            <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-secondary has-ripple" data-dismiss="modal">Close<span class="ripple ripple-animate" style="height: 75.5729px; width: 75.5729px; animation-duration: 0.7s; animation-timing-function: linear; background: rgb(255, 255, 255); opacity: 0.4; top: -10.5382px; left: 3.62149px;"></span></button>
+            <button type="button" class="btn  btn-primary">Send message</button>
+        </div> -->
+        </div>
+    </div>
+</div>

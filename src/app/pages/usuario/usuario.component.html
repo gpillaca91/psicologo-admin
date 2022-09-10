@@ -1,0 +1,147 @@
+<div class="card table-card">
+    <div class="card-header">
+        <h5>Lista de Usuarios de [Aplicativo] # {{ usuarios.length }}</h5>
+        <div class="card-header-right">
+            <div class="btn-group card-option">
+                <button type="button" (click)="abrirModal()" class="btn  btn-primary btn-sm">
+                    Agregar Usuario
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <!-- <th>FOTO</th> -->
+                        <th>NOMBRE COMPLETO</th>
+                        <th>CORREO</th>
+                        <th>PERFIL</th>
+                        <th class="text-right">ACCION</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let usuario of usuarios">
+                        <td>
+                            <div class="d-inline-block align-middle">
+                                <img src="../../../assets/images/user/avatar-4.jpg" alt="user image" class="img-radius wid-40 align-top m-r-15">
+                                <div class="d-inline-block">
+                                    <h6>{{usuario.nombre}}</h6>
+                                    <p class="text-muted m-b-0">Apellidos|Ref</p>
+                                </div>
+                            </div>
+                        </td>
+                        <!-- <td>{{usuario.nombre}}</td> -->
+                        <td>{{usuario.email}}</td>
+                        <td class="text-right"><label class="badge badge-light-success">{{usuario.role}}</label></td>
+                        <td class="text-right">
+                            <a href="#" (click)="borrar(usuario)" class="badge badge-danger">Eliminar</a>
+                            <a href="#" (click)="abrirModal(usuario)" class="badge badge-primary">Editar</a>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- Modal crear Usuario -->
+<div class="fondo-modal-imagen" [class.oculto]="ocultarModal">
+    <div class="modal fade show" role="dialog" style="display: block; padding-right: 19px;">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">{{acccion}} Usuario</h5>
+                    <button type="button" class="close" (click)="cerrarModal()"><span aria-hidden="true">x</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="row align-items-center text-center">
+                            <div class="col-md-12">
+                                <div class="card-body">
+                                    <!-- <form class="form-horizontal form-material" autocomplete="off" [formGroup]="loginForm" (ngSubmit)="login()" id="loginform"> -->
+                                    <form class="form-horizontal form-material" autocomplete="off" id="loginform" [formGroup]="loginForm" (ngSubmit)="editarUsuario()" id="loginform">
+                                        <!-- <img src="./assets/images/logo-dark.png" alt="" class="img-fluid mb-4"> -->
+                                        <div class="form-group mb-3">
+                                            <!-- <label class="floating-label" for="Username">Username</label> -->
+                                            <input type="text" class="form-control" id="Username" placeholder="Nombres" formControlName="nombre">
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <!-- <label class="floating-label" for="Email">Email address</label> -->
+                                            <input type="text" class="form-control" id="Email" placeholder="correo" formControlName="email">
+                                        </div>
+                                        <div class="form-group mb-4">
+                                            <!-- <label class="floating-label" for="Password">Password</label> -->
+                                            <input type="password" class="form-control" id="Password" placeholder="password" formControlName="password">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button (click)="cerrarModal()" type="button" class="mt-3 mb-2 btn  btn-danger btn-sm" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="mt-3 mb-2 btn  btn-primary btn-sm">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- modal editar usuario -->
+<!-- Modal para registar modelos -->
+<!-- <div class="card">
+    <div class="card-header">
+        <h5>Basic Component</h5>
+    </div>
+    <div class="card-body">
+        <h5>Form controls</h5>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <form>
+                    <div class="form-group fill">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    </div>
+                    <div class="form-group fill">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                    </div>
+                    <button type="submit" class="btn  btn-primary">Submit</button>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <form>
+                    <div class="form-group fill">
+                        <label>Text</label>
+                        <input type="text" class="form-control" placeholder="Text">
+                    </div>
+                    <div class="form-group fill">
+                        <label for="exampleFormControlSelect1">Example select</label>
+                        <select class="form-control" id="exampleFormControlSelect1">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Example textarea</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+</div> -->
